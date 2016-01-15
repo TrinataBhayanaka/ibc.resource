@@ -1,0 +1,61 @@
+<section class="page-header">
+	<div class="container">
+
+		<h1>Tracking Laporan</h1>
+        <span class="font-lato size-18 weight-300 hidden-xs">Hasil Pencarian laporan</span>
+
+        <!-- breadcrumbs -->
+        <ol class="breadcrumb">
+            <li><a href="{$basedomain}">Home</a></li>
+            <li class="active">Tracking</li>
+        </ol><!-- /breadcrumbs -->
+
+	</div>
+</section>
+
+
+<section>
+	<div class="container">
+		
+		<div class="row">
+			<div class="col-md-8">
+                {foreach $data as $value}
+				<div class="clearfix search-result"><!-- item -->
+                    <h4 class="margin-bottom-0"><a href="{$basedomain}pengaduan/detail/?id={$value.idPengaduan}" class="tab-post-link">{$value.judul}</a></h4>
+                    <small class="text-success">{$value.tanggalformat}</small>
+                    <p>
+                        ID Laporan : {$value.idLaporan}<br>
+                        Status Laporan : {if $value.status=='1'}Dalam Proses{elseif $value.status=='2'}Ditindak Lanjuti{elseif $value.status=='3'}Tidak Ditindak Lanjuti{elseif $value.status=='4'} Selesai{/if}
+                    </p>
+                </div><!-- /item -->
+                {/foreach}
+
+			</div>
+			<div class="col-md-4">
+				 <form action="{$basedomain}home/search" method="post" class="sky-form boxed">
+                    <header><i class="fa fa-search"></i> Tracking ID Laporan Anda</header>
+                    
+                    <fieldset class="nomargin"> 
+                        <p>Temukan status terakhir laporan anda dengan memasukkan 6 digit ID Laporan atau masukkan alamat email anda.</p>
+                        <label class="input">
+                            <i class="ico-append fa fa-envelope"></i>
+                            <input type="text" name="tracking">
+                            <span class="tooltip tooltip-top-right">Email atau ID laporan</span>
+                        </label>
+
+                    </fieldset>
+
+                    <footer class="celarfix">
+                        <button type="submit" class="btn btn-primary noradius pull-right"><i class="fa fa-check"></i> Lacak</button>
+                        <input type="hidden" name="token" value="1"/>
+                        <div class="login-forgot-password pull-left">
+                            
+                        </div>
+                    </footer>
+                </form>
+			</div>
+		</div>
+		
+	</div>
+</section>
+

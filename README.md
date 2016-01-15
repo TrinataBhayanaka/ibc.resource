@@ -1,1 +1,1 @@
-# ibc.resource
+# sipmas.bsn

@@ -1,0 +1,441 @@
+<section class="page-header">
+	<div class="container">
+
+		<h1>Laporan Pengaduan</h1>
+		<span class="font-lato size-18 weight-300 hidden-xs">Detail laporan</span>
+
+		<!-- breadcrumbs -->
+		<ol class="breadcrumb">
+			<li><a href="{$basedomain}">Home</a></li>
+			<li class="active">Laporan Pengaduan</li>
+		</ol><!-- /breadcrumbs -->
+
+	</div>
+</section>
+
+<section>
+	<div class="container">
+		<div class="row">
+
+			<div class="col-md-8 col-sm-8">
+				<form class="nomargin sky-form boxed" action="#" method="post" id="myForm">
+					<header>
+						<i class="fa fa-file-text"></i> {$data.judul}
+						</header>
+
+					<fieldset class="nomargin">	
+						{$data.isi}
+						<hr>
+						{if !empty($file)}
+						<div class="row tab-post margin-top-30">
+	                        <div class="col-md-12 col-sm-9 col-xs-9 margin-bottom-10">
+								<i class="fa fa-paperclip"></i><strong> Lampiran Data Pendukung :</strong><br>
+							</div>
+								{foreach $file as $val}
+								<div class="col-md-12 col-sm-9 col-xs-9 margin-bottom-10">
+								<a href="{$basedomain}public_assets/{$val.nama}" class="tab-post-link">{$val.path}
+								<button type="button" class="btn btn-default noradius btn-xs pull-right"><i class="fa fa-download"></i> Unduh</button></a>
+								<small>({$val.size})</small>
+								</div>
+								{/foreach}
+						</div>
+						{/if}
+					</fieldset>
+
+					{*}<div class="row margin-bottom-20">
+						<div class="col-md-12">
+							<button type="submit" class="btn btn-primary" id="buttonsubmit"><i class="fa fa-download"></i> Download semua attachment</button>
+						</div>
+					</div>{/*}
+
+				</form>
+
+				<section>
+					
+						<ul class="nav nav-tabs nav-top-border">
+							<li {if $data.fase neq '6'}class="active"{/if}><a href="#tindaklanjut" data-toggle="tab">Tindak Lanjut Laporan</a></li>
+							<li><a href="#penelusuran" data-toggle="tab">Penelusuran Laporan</a></li>
+							{if $data.fase eq '6'}<li {if $data.fase eq '6'}class="active"{/if}><a href="#survey" data-toggle="tab">Survey Kepuasan Masyarakat</a></li>{/if}
+							
+						</ul>
+
+						<div class="tab-content">
+							<div class="tab-pane fade {if $data.fase neq '6'}in active{/if}" id="tindaklanjut">
+								
+							{foreach $comment as $val}
+								<!-- COMMENT -->
+								<ul class="comment list-unstyled">
+									
+									<li class="comment">
+
+										<!-- avatar -->
+										<img class="avatar" src="{$basedomain}assets/images/avatar2.jpg" width="50" height="50" alt="avatar" />
+
+										<!-- comment body -->
+										
+										<div class="comment-body"> 
+											<a href="#" class="comment-author">
+												<small class="text-muted pull-right"> {$val.tanggalstd} </small>
+												<span>{$val.nameUser}</span>
+											</a>
+											{$val.isi}
+											{if !empty($val.files)}
+											<div class="row tab-post margin-top-30">
+							                    <div class="col-md-12 col-sm-9 col-xs-9">
+													<i class="fa fa-paperclip"></i><strong> Lampiran Data Pendukung :</strong><br>
+													{foreach $val.files as $file}
+													<div class="col-md-12 col-sm-9 col-xs-9 margin-bottom-10">
+														<a href="{$basedomain}public_assets/{$file.nama}" class="tab-post-link">{$file.path}
+														<button type="button" class="btn btn-default noradius btn-xs pull-right"><i class="fa fa-download"></i> Unduh</button></a>
+														<small>({$file.size})</small>
+													</div>
+													{/foreach}
+												</div>
+											</div>
+											{/if}
+										</div><!-- /comment body -->
+
+										{*}<!-- options -->
+										<ul class="list-inline size-11 margin-top-10">
+											<li>
+												&nbsp;
+											</li>
+											<li class="pull-right">
+												<a href="#" class="text-danger">Hapus</a>
+											</li>
+											<li class="pull-right">
+												<a href="#" class="text-primary">Ubah</a>
+											</li>
+										</ul><!-- option -->{/*}
+
+									</li><!-- /options -->
+									
+								</ul><!-- /COMMENT -->
+								{/foreach}
+								{if $data.fase neq '6'}
+								<form method="post" action="{$basedomain}pengaduan/ins_balas" class="box-light margin-top-20" enctype="multipart/form-data"><!-- .box-light OR .box-dark -->
+									<div class="box-inner">
+										<h4 class="uppercase">Kirim Balasan</h4>
+											
+										{*}<input class="custom-file-upload" type="file" id="file" name="myfile" id="contact:attachment" data-btn-text="Attachment" />
+										<small class="text-muted block">Max file size: 5Mb (pdf/jpg/png)</small>{/*}
+
+										<div id="fileuploader">Upload</div>
+										<div id="eventsmessage"></div>
+
+
+										<textarea class="summernote form-control" name="isi" data-height="200" data-lang="en-US"></textarea>
+
+										<!-- HIDDEN -->
+										<input type="hidden" name="idPengaduan" value="{$id}">
+										<input type="hidden" name="n_status" value="1">
+
+										<button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> KIRIM PESAN</button>
+
+									</div>
+								</form>
+								{/if}
+							</div>
+							<div class="tab-pane fade" id="penelusuran">
+								<div class="timeline"><!-- .timeline-inverse = right position [left on RTL] -->
+
+										{if 6 lte $data.fase}
+										<!-- ITEM -->
+										<div class="timeline-item timeline-item-bordered" style="min-height:80px">
+											<!-- timeline entry -->
+											<div class="timeline-entry rounded" style="line-height:normal"><!-- .rounded = entry -->
+												<i class="fa fa-check fa-lg"></i>
+												<div class="timeline-vline"><!-- vertical line --></div>
+											</div>
+											<!-- /timeline entry -->
+
+											{*}<small>{$tglBalas.tanggalformat}</small>{/*}
+											<h4 style="margin:0 0 0 0">Laporan Anda sudah selesai</h4>
+										
+
+										</div>
+										<!-- /ITEM -->
+										{/if}
+
+										{if 5 lte $data.fase}
+										<!-- ITEM -->
+										<div class="timeline-item timeline-item-bordered" style="min-height:80px">
+											<!-- timeline entry -->
+											<div class="timeline-entry rounded" style="line-height:normal"><!-- .rounded = entry -->
+												<i class="fa fa-check fa-lg"></i>
+												<div class="timeline-vline"><!-- vertical line --></div>
+											</div>
+											<!-- /timeline entry -->
+
+											<small>{$tglBalas.tanggalformat}</small>
+											<h4 style="margin:0 0 0 0">Laporan Anda sedang memasuki proses penyelesaian</h4>
+										
+
+										</div>
+										<!-- /ITEM -->
+										{/if}
+
+										{if 4 lte $data.fase && !empty($data.disposisi)}
+										<!-- ITEM -->
+										<div class="timeline-item timeline-item-bordered" style="min-height:80px">
+											<!-- timeline entry -->
+											<div class="timeline-entry rounded" style="line-height:normal"><!-- .rounded = entry -->
+												<i class="fa fa-check fa-lg"></i>
+												<div class="timeline-vline"><!-- vertical line --></div>
+											</div>
+											<!-- /timeline entry -->
+
+											<small>{$disposisi.tanggalformat}</small>
+											<h4 style="margin:0 0 0 0">Laporan Anda sedang disalurkan ke pihak terkait</h4>
+										
+
+										</div>
+										<!-- /ITEM -->
+										{/if}
+
+										{if 2 lte $data.fase}
+										<!-- ITEM -->
+										<div class="timeline-item timeline-item-bordered" style="min-height:80px">
+											<!-- timeline entry -->
+											<div class="timeline-entry rounded" style="line-height:normal"><!-- .rounded = entry -->
+												<i class="fa fa-check fa-lg"></i>
+												<div class="timeline-vline"><!-- vertical line --></div>
+											</div>
+											<!-- /timeline entry -->
+
+											<small>{$penelaahan.tanggalstd}</small>
+											<h4 style="margin:0 0 0 0">Laporan Anda sedang memasuki proses penelaahan pengaduan yang dilakukan oleh inspektorat BSN</h4>
+										
+
+										</div>
+										<!-- /ITEM -->
+										{/if}
+
+										{if 1 lte $data.fase}
+										<!-- ITEM -->
+										<div class="timeline-item timeline-item-bordered" style="min-height:80px">
+											<!-- timeline entry -->
+											<div class="timeline-entry rounded" style="line-height:normal"><!-- .rounded = entry -->
+												<i class="fa fa-check fa-lg"></i>
+												<div class="timeline-vline"><!-- vertical line --></div>
+											</div>
+											<!-- /timeline entry -->
+
+											<small>{$data.tanggalformat}</small>
+											<h4 style="margin:0 0 0 0">Laporan Anda sudah masuk ke dalam database sistem</h4>
+										
+
+										</div>
+										<!-- /ITEM -->
+										{/if}
+								</div>
+							</div>
+							{if $data.fase eq '6'}
+							<div class="tab-pane fade {if $data.fase eq '6'}in active{/if}" id="survey">
+								<form method="post" action="{$basedomain}pengaduan/ins_survey">
+									<h4 class="upercase">Survey Kepuasan Masyarakat</h4>
+									<p>Apakah Anda sudah puas dengan jawaban yang diberikan pihak BSN terhadap pengaduan yang anda laporkan? Mohon berikan tanggapan anda melaluifitur di bawah ini.</p>
+									
+										<label class="radio">
+											<input type="radio" name="survey" value="1" {if $survey.survey eq 1}checked{/if}>
+											<i></i> Sangat Puas
+										</label>
+										<label class="radio">
+											<input type="radio" name="survey" value="2" {if $survey.survey eq 2}checked{/if}>
+											<i></i> Puas
+										</label>
+										<label class="radio">
+											<input type="radio" name="survey" value="3" {if $survey.survey eq 3}checked{/if}>
+											<i></i> Tidak Puas
+										</label>
+										<label class="radio">
+											<input type="radio" name="survey" value="4" {if $survey.survey eq 4}checked{/if}>
+											<i></i> Sangat Tidak Puas
+										</label>
+
+									<!-- HIDDEN -->
+									<input type="hidden" name="idPengaduan" value="{$id}">
+									
+									<div class="row margin-top-20">
+										<div class="col-md-12">
+											<button type="submit" class="btn btn-primary" id="buttonsubmit"><i class="fa fa-check"></i> Kirim Survey</button>
+										</div>
+									</div>
+								</form>
+							</div>
+							{/if}
+							
+						</div>
+					
+				</section>
+
+
+			</div>
+
+			<div class="col-md-4 col-sm-4">
+				<form action="{$basedomain}" method="post" class="sky-form boxed">
+                    <header><i class="fa fa-info"></i> Informasi Laporan</header>
+                    
+                    <fieldset class="nomargin"> 
+                       <div class="row tab-post">
+	                        <div class="col-md-12 col-sm-9 col-xs-9">
+								<small>ID Laporan : {$data.idLaporan}</small>
+								<small>Email : {$user.email}</small>
+								<small>Nama Lengkap : {$user.name}</small>
+								<small>Ruang Lingkup Laporan : {$data.ruangLingkup}</small>
+								<small>Status Laporan : {if $data.status eq '4'}Selesai
+														{else}Dalam Proses{/if}</small>
+							</div>
+						</div>
+
+                    </fieldset>
+
+                </form>
+
+                {if $data.perorangan eq '1'}
+                <form action="{$basedomain}" method="post" class="sky-form boxed">
+                    <header><i class="fa fa-user"></i> Informasi Terlapor</header>
+                    
+                    <fieldset class="nomargin"> 
+                       <div class="row tab-post">
+	                        <div class="col-md-12 col-sm-9 col-xs-9">
+								<small>Nama Terlapor : {$data.nama}</small>
+								<small>Alamat : {$data.alamat}</small>
+								<small>Jabatan : {$data.jabatan}</small>
+								<small>Unit Kerja : {$data.satker}</small>
+								<small>Lokasi Kasus : {$data.lokasi}</small>
+							</div>
+						</div>
+
+                    </fieldset>
+
+                </form>
+                {/if}
+
+                <form action="{$basedomain}home/search" method="post" class="sky-form boxed">
+                    <header><i class="fa fa-search"></i> Tracking ID Laporan Anda</header>
+                    
+                    <fieldset class="nomargin"> 
+                        <p>Temukan status terakhir laporan anda dengan memasukkan 6 digit ID Laporan atau masukkan alamat email anda.</p>
+                        <label class="input">
+                            <i class="ico-append fa fa-envelope"></i>
+                            <input type="text" name="tracking" required>
+                            <span class="tooltip tooltip-top-right">Email atau ID laporan</span>
+                        </label>
+
+                    </fieldset>
+
+                    <footer class="celarfix">
+                        <button type="submit" class="btn btn-primary noradius pull-right"><i class="fa fa-check"></i> Lacak</button>
+                        <input type="hidden" name="token" value="1"/>
+                        <div class="login-forgot-password pull-left">
+                            
+                        </div>
+                    </footer>
+                </form>
+
+                <form action="{$basedomain}" method="post" class="sky-form boxed">
+                    <header><i class="fa fa-tags"></i> Daftar Pengaduan Anda</header>
+                    
+                    <fieldset class="nomargin"> 
+                    	{foreach $dataPengaduan as $val}
+                    	<div class="row tab-post">
+	                        <div class="col-md-12 col-sm-9 col-xs-9">
+								<a href="{$basedomain}pengaduan/detail/?id={$val.idPengaduan}" class="tab-post-link"><strong>{$val.judul}</strong></a>
+								<small>{$val.tanggalformat}</small>
+								<small>ID Laporan : {$val.idLaporan}</small>
+
+								<small>Status Laporan : {if $val.status eq '4'}Selesai{else}Dalam Proses{/if}</small>
+
+							</div>
+						</div>
+						{/foreach}
+
+                    </fieldset>
+
+                </form>
+			</div>
+
+		</div>
+	</div>
+</section>
+
+{literal}
+<script type="text/javascript">
+	function submitForm()
+	{
+		var atLeastOneIsChecked = $('input[name="termagree"]:checked').length > 0;
+		
+		if(atLeastOneIsChecked){
+			$("#buttonsubmit").removeAttr('disabled');
+			
+		} else {
+			$("#buttonsubmit").attr('disabled','disabled');
+			
+		}
+	}
+
+	function personal()
+	{
+		var atLeastOneIsChecked = $('input[name="perorangan"]:checked').length > 0;
+		
+		if(atLeastOneIsChecked){
+			$(".personal").removeAttr('disabled');
+			
+		} else {
+			$(".personal").val('');
+			$(".personal").attr('disabled','disabled');
+			
+		}
+	}
+
+	$(document).ready(function()
+	{
+		$("#fileuploader").uploadFile({url: basedomain+"pengaduan/uploadAjax",
+			dragDrop: true,
+			fileName: "myfile",
+			returnType: "json",
+			showDelete: true,
+			showDownload:true,
+			statusBarWidth:600,
+			dragdropWidth:600,
+			deleteCallback: function (data, pd) {
+			    
+			        $.post(basedomain+"pengaduan/deleteAjax", {op: "delete",name: data[0]},
+			            function (resp,textStatus, jqXHR) {
+			                //Show Message	
+			                alert("File di hapus");
+			            });
+			    var name = data[0].replace(/['"]+/g, '');
+			    var fin = name.split(".");
+				document.getElementById(fin[0]).remove();
+
+			    pd.statusbar.hide(); //You choice.
+
+			},
+			downloadCallback:function(filename,pd)
+			{
+				window.open(basedomain+"public_assets/tmp/"+filename[0]);
+			},
+			onSuccess:function(files,data,xhr,pd)
+			{
+				var name = data[0].replace(/['"]+/g, '');
+				var fin = name.split(".");
+				var real = data[1].replace(/['"]+/g, '');
+				
+				$("#eventsmessage").append(
+				    $('<input>', {
+				        type: 'hidden',
+				        id: fin[0],
+				        name: name,
+				        value: "fileUploadKey|"+name+"|"+real+"|"+data[2]
+				    })
+				);
+				
+				
+			}
+
+			}); 
+	});
+</script>
+{/literal}

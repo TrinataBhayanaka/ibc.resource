@@ -1,0 +1,453 @@
+{literal}
+<script>
+// $('.selectpicker').selectpicker();
+</script>
+{/literal}
+<section class="page-header">
+    <div class="container">
+
+        <h1>Statistik Pengaduan</h1>
+        
+
+        <!-- breadcrumbs -->
+        <ol class="breadcrumb">
+            <li><a href="{$basedomain}">Home</a></li>
+            <li class="active">Statistik Pengaduan</li>
+        </ol><!-- /breadcrumbs -->
+
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-8 col-sm-8">
+                <form class="sky-form boxed">
+                    <header><i class="fa fa-pie-chart"></i> Statistik Laporan Pengaduan<label id="monthref"></label></header>
+
+                    <fieldset class="nomargin">
+                    	<div class="col-md-6">
+                    		<div class="fancy-form fancy-form-select"><!-- select -->
+								<select id="monthid" name="month" class="form-control">
+									<option value=''>Choose one of the month</option>
+				                    <option value='15'>Semua</option>
+				                    <option value='1'>Januari</option>
+				                    <option value='2'>Februari</option>
+				                    <option value='3'>Maret</option>
+				                    <option value='4'>April</option>
+				                    <option value='5'>Mei</option>
+				                    <option value='6'>Juni</option>
+				                    <option value='7'>Juli</option>
+				                    <option value='8'>Agustus</option>
+				                    <option value='9'>September</option>
+				                    <option value='10'>Oktober</option>
+				                    <option value='11'>November</option>
+				                    <option value='12'>December</option>
+								</select>
+
+								<i class="fancy-arrow"></i>
+							</div><!-- /select -->
+                    	</div>
+
+                    	<div class="col-md-6">
+                    		<div class="fancy-form fancy-form-select"><!-- select -->
+								<select id="yearid" name="year" class="form-control">
+									<option value=''>Choose one of the year</option>
+				                    <option value='3'>semua</option>
+				                    <option value='{date(Y) - 1}'>{date(Y) - 1}</option>
+				                    <option value='{date(Y)}'>{date(Y)}</option>
+								</select>
+
+								<i class="fancy-arrow"></i>
+							</div><!-- /select -->
+                    	</div>
+ 
+                       <div id="demo-morris-donut" class="margin-top-20 margin-bottom-20" style="height:250px"></div>
+                    </fieldset>
+
+                </form>
+
+                <form class="sky-form boxed">
+                    <header><i class="fa fa-bar-chart"></i> Statistik Hasil Survey Kepuasan Masyarakat <label id="monthref_v2"></label></header>
+                    
+                    <fieldset class="nomargin">
+                    	<div class="col-md-6">
+                    		<div class="fancy-form fancy-form-select"><!-- select -->
+								<select id="monthid_v2" name="month" class="form-control">
+									<option value=''>Pilih Bulan</option>
+				                    <option value='15'>Semua</option>
+				                    <option value='1'>Januari</option>
+				                    <option value='2'>Februari</option>
+				                    <option value='3'>Maret</option>
+				                    <option value='4'>April</option>
+				                    <option value='5'>Mei</option>
+				                    <option value='6'>Juni</option>
+				                    <option value='7'>Juli</option>
+				                    <option value='8'>Agustus</option>
+				                    <option value='9'>September</option>
+				                    <option value='10'>Oktober</option>
+				                    <option value='11'>November</option>
+				                    <option value='12'>December</option>
+								</select>
+
+								<i class="fancy-arrow"></i>
+							</div><!-- /select -->
+                    	</div>
+
+                    	<div class="col-md-6">
+                    		<div class="fancy-form fancy-form-select"><!-- select -->
+								<select id="yearid_v2" name="year" class="form-control">
+									<option value=''>Pilih Tahun</option>
+				                    <option value='3'>semua</option>
+				                    <option value='{date(Y) - 1}'>{date(Y) - 1}</option>
+				                    <option value='{date(Y)}'>{date(Y)}</option>
+								</select>
+
+								<i class="fancy-arrow"></i>
+							</div><!-- /select -->
+                    	</div> 
+
+                        <div class="margin-top-50" id="demo-morris-bar" style="height:227px"></div>
+                    </fieldset>
+
+                </form>
+               
+            </div>
+
+            <div class="col-md-4 col-sm-4">
+            	{if $user}
+                <form action="{$basedomain}home/search" method="post" class="sky-form boxed">
+                {else}
+
+                <form action="{$basedomain}home" onsubmit="alert('Anda Harus Login Dahulu..')" method="post" class="sky-form boxed">
+                {/if}
+                    <header><i class="fa fa-search"></i> Tracking ID Laporan Anda</header>
+                    
+                    <fieldset class="nomargin"> 
+                        <p>Temukan status terakhir laporan anda dengan memasukkan 6 digit ID Laporan atau masukkan alamat email anda.</p>
+                        <label class="input">
+                            <i class="ico-append fa fa-envelope"></i>
+                            <input type="text" name="tracking" required>
+                            <span class="tooltip tooltip-top-right">Email atau ID laporan</span>
+                        </label>
+
+                    </fieldset>
+
+                    <footer class="celarfix">
+                        <button type="submit" class="btn btn-primary noradius pull-right"><i class="fa fa-check"></i> Lacak</button>
+                        <input type="hidden" name="token" value="1"/>
+                        <div class="login-forgot-password pull-left">
+                            
+                        </div>
+                    </footer>
+                </form>
+
+                <form action="{$basedomain}" method="post" class="sky-form boxed">
+                    <header><i class="fa fa-tags"></i> Daftar Pengaduan Anda</header>
+                    
+                    <fieldset class="nomargin"> 
+                        {foreach $dataPengaduan as $val}
+                    	<div class="row tab-post">
+	                        <div class="col-md-12 col-sm-9 col-xs-9">
+								<a href="{$basedomain}pengaduan/detail/?id={$val.idPengaduan}" class="tab-post-link"><strong>{$val.judul}</strong></a>
+								<small>{$val.tanggalformat}</small>
+								<small>ID Laporan : {$val.idLaporan}</small>
+								<small>Status Laporan : {if $val.status eq '4'}Selesai{else}Dalam Proses{/if}</small>
+							</div>
+						</div>
+						{/foreach}
+						{*}
+                        <div class="row tab-post">
+                            <div class="col-md-12 col-sm-9 col-xs-9">
+                                <a href="#" class="tab-post-link"><strong>Bagaimana penjelasan untuk SNI Pembalut Wanita ?</strong></a>
+                                <small>Rabu, 08 Juli 2015 14:25 WIB</small>
+                                <small>ID Laporan : 5623333</small>
+                                <small>Status Laporan : Aktif</small>
+                            </div>
+                        </div>
+
+                        <div class="row tab-post">
+                            <div class="col-md-12 col-sm-9 col-xs-9">
+                                <a href="#" class="tab-post-link"><strong>Bagaimana penjelasan untuk SNI Pembalut Wanita ?</strong></a>
+                                <small>Rabu, 08 Juli 2015 14:25 WIB</small>
+                                <small>ID Laporan : 5623333</small>
+                                <small>Status Laporan : Aktif</small>
+                            </div>
+                        </div>
+
+                        <div class="row tab-post">
+                            <div class="col-md-12 col-sm-9 col-xs-9">
+                                <a href="#" class="tab-post-link"><strong>Bagaimana penjelasan untuk SNI Pembalut Wanita ?</strong></a>
+                                <small>Rabu, 08 Juli 2015 14:25 WIB</small>
+                                <small>ID Laporan : 5623333</small>
+                                <small>Status Laporan : Aktif</small>
+                            </div>
+                        </div>
+                        {/*}
+                    </fieldset>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{literal}
+<script type="text/javascript">
+    $(document).ready(function() {
+        // MORRIS DONUT CHART
+        // =================================================================
+        // Require MorrisJS Chart
+        // -----------------------------------------------------------------
+        // http://morrisjs.github.io/morris.js/
+		    /*Morris.Donut({
+            element: 'demo-morris-donut',
+            data: [
+                {label: "Dalam Proses", value: 35},
+                {label: "Selesai", value: 65}
+            ],
+            colors: [
+                '#a6c600',
+                '#177bbb'
+            ],
+            resize:true
+        });*/
+        // =================================================================
+		
+		window.Morris.Donut.prototype.setData = function(data, redraw) {
+			if (redraw == null) {
+				redraw = true;
+			}
+			this.data = data;
+			this.values = (function() {
+			var _i, _len, _ref, _results;
+			_ref = this.data;
+			_results = [];
+			for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+				row = _ref[_i];
+				_results.push(parseFloat(row.value));
+			}
+			return _results;
+			}).call(this);
+			this.dirty = true;
+			if (redraw) {
+				return this.redraw();
+			}
+		}
+
+		var donut ="";
+		$.post(basedomain+"statistik/chart",function(statistik_pengaduan){
+			var temp_a = statistik_pengaduan.proses.total;
+			var temp_b = statistik_pengaduan.selesai.total;
+			$('#monthref').text(statistik_pengaduan.month);
+			//$('#yearsref').text(statistik_pengaduan.years);
+			var month =statistik_pengaduan.month;
+			var space = "  ";
+			var years =statistik_pengaduan.years;
+			var mix = month.concat(space,years); 
+			$('#monthref').text(mix);
+			
+			donut = Morris.Donut({
+			element: 'demo-morris-donut',
+			data: [
+				//{label: "Registered", value: register_user[0].total},
+				{label: "Dalam Proses", value: temp_a},
+				{label: "Selesai", value: temp_b}
+			],
+			colors: [
+				 '#a6c600',
+                '#177bbb'
+			],
+			resize:true
+		});
+		},"JSON");
+		
+		$('#monthid,#yearid').on('change', function(){
+		var monthid = $('#monthid').val();
+		var yearid = $('#yearid').val();
+		if(monthid != '' && yearid != '' ){
+				// if(monthid != 15 && yearid != 3){
+				$.post(basedomain+"statistik/chart_condtn", {monthid:monthid, yearid:yearid},function(statistik_pengaduan){
+					//$('#monthref').text(statistik_pengaduan.month);
+					//$('#yearsref').text(statistik_pengaduan.years);
+					var month =statistik_pengaduan.month;
+					var space = "  ";
+					var years =statistik_pengaduan.years;
+					var mix = month.concat(space,years); 
+					$('#monthref').text(mix);	
+						donut.setData([
+					{label: "Dalam Proses", value: statistik_pengaduan.proses.total},
+					{label: "Selesai", value: statistik_pengaduan.selesai.total}
+				  ]);	
+				},"JSON");
+				/*
+	      	}else{
+	      		if(monthid == 15 && yearid == 3){
+	      		$.post(basedomain+"statistik/chartDefault", {monthid:monthid, yearid:yearid},function(statistik_pengaduan){
+					//$('#monthref').text(statistik_pengaduan.month);
+					//$('#yearsref').text(statistik_pengaduan.years);
+					var month =statistik_pengaduan.month;
+					var space = "  ";
+					var years =statistik_pengaduan.years;
+					var mix = month.concat(space,years); 
+					$('#monthref').text(mix);	
+						donut.setData([
+					{label: "Dalam Proses", value: statistik_pengaduan.proses.total},
+					{label: "Selesai", value: statistik_pengaduan.selesai.total}
+				  ]);	
+			},"JSON");
+	      	}
+	      }*/
+
+		}else{
+
+			// if(monthid != 15 && yearid != 3){
+				$.post(basedomain+"statistik/chart_condtn", {monthid:monthid, yearid:yearid},function(statistik_pengaduan){
+					//$('#monthref').text(statistik_pengaduan.month);
+					//$('#yearsref').text(statistik_pengaduan.years);
+					var month =statistik_pengaduan.month;
+					var space = "  ";
+					var years =statistik_pengaduan.years;
+					var mix = month.concat(space,years); 
+					$('#monthref').text(mix);	
+						donut.setData([
+					{label: "Dalam Proses", value: statistik_pengaduan.proses.total},
+					{label: "Selesai", value: statistik_pengaduan.selesai.total}
+				  ]);	
+				},"JSON");
+			// }
+		}		
+	});	
+    
+
+        // MORRIS BAR CHART
+        // =================================================================
+        // Require MorrisJS Chart
+        // -----------------------------------------------------------------
+        // http://morrisjs.github.io/morris.js/
+        // =================================================================
+        /*Morris.Bar({
+            element: 'demo-morris-bar',
+            data: [
+                { y: '2015', a: 20, b: 35, c:45, d:40 }
+            ],
+            xkey: 'y',
+            ykeys: ['a', 'b', 'c', 'd'],
+            labels: ['Aktif', 'Ditindaklanjuti', 'Tidak Ditindaklanjuti', 'Non Aktif'],
+            gridEnabled: true,
+            gridLineColor: 'transparent',
+            barColors: ['#177bbb', '#afd2f0'],
+            resize:true,
+            hideHover: 'auto'
+        });*/
+		
+		var bar ="";
+		
+		$.post(basedomain+"statistik/chart_bar",function(statistik_pengaduan_v2){
+			var temp_a_v2 = statistik_pengaduan_v2.a.total;
+			var temp_b_v2 = statistik_pengaduan_v2.dl.total;
+			var temp_c_v2 = statistik_pengaduan_v2.tdl.total;
+			var temp_d_v2 = statistik_pengaduan_v2.na.total;
+			var temp_years = statistik_pengaduan_v2.years;
+			//$('#monthref').text(statistik_pengaduan_v2.month);
+			//$('#yearsref').text(statistik_pengaduan_v2.years);
+			var month_v2 =statistik_pengaduan_v2.month;
+			var space_v2 = "  ";
+			var years_v2 =statistik_pengaduan_v2.years;
+			var mix_v2 = month_v2.concat(space_v2,years_v2); 
+			$('#monthref_v2').text(mix_v2);
+			
+			bar = Morris.Bar({
+				element: 'demo-morris-bar',
+				data: [
+					{ y: temp_years, a: temp_a_v2, b: temp_b_v2, c:temp_c_v2, d:temp_d_v2 }
+				],
+				xkey: 'y',
+				ykeys: ['a', 'b', 'c', 'd'],
+				labels: ['Sangat Puas', 'Puas', 'Tidak Puas', 'Sangat Tidak Puas'],
+				gridEnabled: true,
+				gridLineColor: '#177bbb',
+				barColors: ['#177bbb', '#afd2f0'],
+				resize:true,
+				hideHover: 'auto'
+			});
+		},"JSON");
+	
+	
+	$('#monthid_v2,#yearid_v2').on('change', function(){
+		//var bar ="";
+		var monthid_v2 = $('#monthid_v2').val();
+		var yearid_v2 = $('#yearid_v2').val();
+		if(monthid_v2 != '' && yearid_v2 != ''){
+				// if(monthid_v2 != 15  && yearid_v2 != 3){
+				$.post(basedomain+"statistik/chart_bar_condtn", {monthid_v2:monthid_v2, yearid_v2:yearid_v2},function(statistik_pengaduan_v2){
+					var temp_a_v2 = statistik_pengaduan_v2.a.total;
+					var temp_b_v2 = statistik_pengaduan_v2.dl.total;
+					var temp_c_v2 = statistik_pengaduan_v2.tdl.total;
+					var temp_d_v2 = statistik_pengaduan_v2.na.total;
+					var temp_years = statistik_pengaduan_v2.years;
+					//$('#monthref').text(statistik_pengaduan_v2.month);
+					//$('#yearsref').text(statistik_pengaduan_v2.years);
+					var month_v2 =statistik_pengaduan_v2.month;
+					var space_v2 = "  ";
+					var years_v2 =statistik_pengaduan_v2.years;
+					var mix_v2 = month_v2.concat(space_v2,years_v2); 
+					$('#monthref_v2').text(mix_v2);
+					
+					bar.setData([{ "y": temp_years, "a": temp_a_v2, "b": temp_b_v2, "c": temp_c_v2, "d": temp_d_v2} ]);
+			},"JSON");
+			/*		
+		  }else{
+		  		if(monthid_v2 == 15  && yearid_v2 == 3){
+		  		$.post(basedomain+"statistik/chart_bar_default", {monthid_v2:monthid_v2, yearid_v2:yearid_v2},function(statistik_pengaduan_v2){
+					var temp_a_v2 = statistik_pengaduan_v2.a.total;
+					var temp_b_v2 = statistik_pengaduan_v2.dl.total;
+					var temp_c_v2 = statistik_pengaduan_v2.tdl.total;
+					var temp_d_v2 = statistik_pengaduan_v2.na.total;
+					var temp_years = statistik_pengaduan_v2.years;
+					//$('#monthref').text(statistik_pengaduan_v2.month);
+					//$('#yearsref').text(statistik_pengaduan_v2.years);
+					var month_v2 =statistik_pengaduan_v2.month;
+					var space_v2 = "  ";
+					var years_v2 =statistik_pengaduan_v2.years;
+					var mix_v2 = month_v2.concat(space_v2,years_v2); 
+					$('#monthref_v2').text(mix_v2);
+					
+					bar.setData([{ "y": temp_years, "a": temp_a_v2, "b": temp_b_v2, "c": temp_c_v2, "d": temp_d_v2} ]);
+					
+			},"JSON");	
+		   }
+		  }*/
+
+		}else{
+
+			$.post(basedomain+"statistik/chart_bar_condtn", {monthid_v2:monthid_v2, yearid_v2:yearid_v2},function(statistik_pengaduan_v2){
+					var temp_a_v2 = statistik_pengaduan_v2.a.total;
+					var temp_b_v2 = statistik_pengaduan_v2.dl.total;
+					var temp_c_v2 = statistik_pengaduan_v2.tdl.total;
+					var temp_d_v2 = statistik_pengaduan_v2.na.total;
+					var temp_years = statistik_pengaduan_v2.years;
+					//$('#monthref').text(statistik_pengaduan_v2.month);
+					//$('#yearsref').text(statistik_pengaduan_v2.years);
+					var month_v2 =statistik_pengaduan_v2.month;
+					var space_v2 = "  ";
+					var years_v2 =statistik_pengaduan_v2.years;
+					var mix_v2 = month_v2.concat(space_v2,years_v2); 
+					$('#monthref_v2').text(mix_v2);
+					
+					bar.setData([{ "y": temp_years, "a": temp_a_v2, "b": temp_b_v2, "c": temp_c_v2, "d": temp_d_v2} ]);
+			},"JSON");
+		}	
+	});	
+
+        // Dual List Plugin Init
+        //var demo1 = $('.demo1').bootstrapDualListbox({
+        //});
+		
+		
+    });
+
+</script>
+{/literal}
