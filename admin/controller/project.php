@@ -78,7 +78,11 @@ class project extends Controller {
 	public function people()
 	{
 		$data = $this->mproject->getSData('hr_project','idProject='.$_GET['id']);
-		$users = $this->mproject->getpeople();
+		$req = $this->mproject->getDataCond('hr_project',"idProject IN ({$data['idRequired']})");
+		$users = $this->mproject->getpeople($data['idRequired']);
+		$team = $this->mproject->getTeam($_GET['id'],1);
+		$participants = $this->mproject->getDataCond('hr_users',"type IN (2,3)");
+		$listParticipants = $this->mproject->getTeam($_GET['id'],2);
 
 		$data['date_start'] = changeDate($data['date_start']);
 		$data['date_end'] = changeDate($data['date_end']);
@@ -86,6 +90,10 @@ class project extends Controller {
 		$this->view->assign('id',$_GET['id']);
 		$this->view->assign('data',$data);
 		$this->view->assign('users',$users);
+		$this->view->assign('team',$team);
+		$this->view->assign('participants',$participants);
+		$this->view->assign('listParticipants',$listParticipants);
+		$this->view->assign('required',$req);
 
 		return $this->loadView('project/people');
 	}
@@ -98,6 +106,28 @@ class project extends Controller {
 		$this->view->assign('data',$data);
 
 		return $this->loadView('project/addPeople');
+	}
+
+	public function ins_team()
+	{
+		global $basedomain;
+
+		$this->mproject->insertData($_POST,'hr_userproject');
+
+		echo "<script>alert('Data successfully inserted');window.location.href='".$basedomain."project/people/?id={$_POST['idProject']}'</script>";
+		exit;
+	}
+
+	public function del_people()
+	{
+		global $basedomain;
+
+		$tmp = explode("a", $_GET['id']);
+
+		$this->mproject->delete_people($tmp);
+
+		echo "<script>alert('Data successfully deleted');window.location.href='".$basedomain."project/people/?id={$tmp[2]}'</script>";
+		exit;
 	}
 
 	

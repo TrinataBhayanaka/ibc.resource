@@ -94,36 +94,88 @@
 							<p>Please choose team member with suitable skill as a professional speaker or already takes part in the required event.</p>
 						</div>
 					</div>
-
-					<div id="demo-custom-toolbar2" class="table-toolbar-left">
-						<button id="demo-custom-toolbar2" class="btn btn-primary btn-labeled fa fa-times" data-target="#demo-default-modal" data-toggle="modal">Add People</button>
-					</div>
-
-					<table id="demo-dt-addrows" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
-						<thead>
-							<tr>
-								<th>Name</th>
-								<th>Faculty</th>
-								<th class="min-tablet">Institution</th>
-								<th class="min-tablet">Education</th>
-								<th class="min-desktop">Status</th>
-								<th class="min-desktop">Detail</th>
-							</tr>
-						</thead>
-						<tbody>
-							{foreach $users as $val}
-								<tr>
-									<td>{$val.name}</td>
-									<td>{$val.jenis_pekerjaan}</td>
-									<td>{$val.institusi}</td>
-									<td>{$val.pendidikan}</td>
-									<td align="center"><span class="label label-normal label-{if $data.n_status eq 1}info{else}success{/if}">Team</span></td>
-									<td align="center"><a href="" class="btn-link">View</a></td>
-								</tr>
-							{/foreach}
-						</tbody>
-					</table>
 					
+				</div>
+			</div>
+
+			<div class="panel">
+				<div class="panel-heading">
+					<div class="panel-control">
+						<ul class="nav nav-tabs">
+							<li class="active"><a href="#demo-tabs-box-1" data-toggle="tab">Team</a></li>
+							<li><a href="#demo-tabs-box-2" data-toggle="tab">Participants</a></li>
+						</ul>
+					</div>
+					<h3 class="panel-title">Add People</h3>
+				</div>
+
+				<div class="panel-body">
+					<div class="tab-content">
+						<div class="tab-pane fade in active" id="demo-tabs-box-1">
+							<div id="demo-custom-toolbar2" class="table-toolbar-left">
+								<button id="demo-custom-toolbar2" class="btn btn-primary btn-labeled fa fa-plus" data-target="#demo-default-modal" data-toggle="modal">Add Team</button>
+							</div>
+
+							<table id="demo-dt-addrows" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Faculty</th>
+										<th class="min-tablet">Institution</th>
+										<th class="min-tablet">Education</th>
+										<th class="min-desktop">Detail</th>
+									</tr>
+								</thead>
+								<tbody>
+									{foreach $team as $val}
+										<tr>
+											<td>{$val.name}</td>
+											<td>{$val.jenis_pekerjaan}</td>
+											<td>{$val.institusi}</td>
+											<td>{$val.pendidikan}</td>
+											<td align="center">
+												<a href="{$basedomain}project/del_people/?id={$val.id}a2a{$id}">
+													<button class="btn btn-danger btn-xs btn-labeled fa fa-trash">Delete</button>
+												</a>
+											</td>
+										</tr>
+									{/foreach}
+								</tbody>
+							</table>
+						</div>
+						<div class="tab-pane fade" id="demo-tabs-box-2">
+							<div id="demo-custom-toolbar3" class="table-toolbar-left">
+								<button id="demo-custom-toolbar2" class="btn btn-primary btn-labeled fa fa-plus" data-target="#demo-default-modal2" data-toggle="modal">Add Participants</button>
+							</div>
+
+							<table id="demo-dt-addrows2" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Faculty</th>
+										<th class="min-tablet">Institution</th>
+										<th class="min-tablet">Education</th>
+										<th class="min-desktop">Detail</th>
+									</tr>
+								</thead>
+								<tbody>
+									{foreach $listParticipants as $val}
+										<tr>
+											<td>{$val.name}</td>
+											<td>{$val.jenis_pekerjaan}</td>
+											<td>{$val.institusi}</td>
+											<td>{$val.pendidikan}</td>
+											<td align="center">
+												<a href="{$basedomain}project/del_people/?id={$val.id}a2a{$id}">
+												<button class="btn btn-danger btn-xs btn-labeled fa fa-trash">Delete</button>
+												</a>
+											</td>
+										</tr>
+									{/foreach}
+								</tbody>
+							</table>
+						</div>
+					</div>
 				</div>
 			</div>
 			<!--===================================================-->
@@ -142,38 +194,75 @@
 <div class="modal fade" id="demo-default-modal" role="dialog" tabindex="-1" aria-labelledby="demo-default-modal" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
+			<form action="{$basedomain}project/ins_team" method="post">
+				<!--Modal header-->
+				<div class="modal-header">
+					<button data-dismiss="modal" class="close" type="button">
+					<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">Add Team</h4>
+				</div>
 
-			<!--Modal header-->
-			<div class="modal-header">
-				<button data-dismiss="modal" class="close" type="button">
-				<span aria-hidden="true">&times;</span>
-				</button>
-				<h4 class="modal-title">Modal Heading</h4>
-			</div>
+				<!--Modal body-->
+				<div class="modal-body">
+					<h4 class="text-thin">Requirements :</h4>
+					{foreach $required as $val}
+						<i class="fa fa-check-square-o"></i> {$val.name}
+					{/foreach}
+					<p>Only people that meet with the requirements above are displayed.</p>
+					<select class="js-example-basic-multiple"  name="idUser" style="width:350px">
+					  {foreach $users as $val}
+					  	<option value="{$val.id}">{$val.name}</option>
+					  {/foreach}
+					</select>
+				</div>
 
-			<!--Modal body-->
-			<div class="modal-body">
-				<h4 class="text-thin">Bootstrap Modal Vertical Alignment Center</h4>
-				<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
-				<hr>
-				<h4 class="text-thin">Popover in a modal</h4>
-				<p>This
-					<button class="btn btn-sm btn-warning demo-modal-popover add-popover" data-toggle="popover" data-trigger="focus" data-content="And here\'s some amazing content. It\'s very engaging. right?" data-original-title="Popover Title">button</button>
-					should trigger a popover on click.
-				</p>
-				<hr>
-				<h4 class="text-thin">Tooltips in a modal</h4>
-				<p>
-					<a class="btn-link add-tooltip" href="#" data-original-title="Tooltip">This link</a> and
-					<a class="btn-link add-tooltip" href="#" data-original-title="Tooltip">that link</a> should have tooltips on hover.
-				</p>
-			</div>
+				<input type="hidden" name="idProject" value="{$id}">
+				<input type="hidden" name="people" value="1">
+				<input type="hidden" name="n_status" value="1">
 
-			<!--Modal footer-->
-			<div class="modal-footer">
-				<button data-dismiss="modal" class="btn btn-default" type="button">Close</button>
-				<button class="btn btn-primary">Save changes</button>
-			</div>
+				<!--Modal footer-->
+				<div class="modal-footer">
+					<button data-dismiss="modal" class="btn btn-default" type="button">Close</button>
+					<button class="btn btn-primary">Save changes</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="demo-default-modal2" role="dialog" tabindex="-1" aria-labelledby="demo-default-modal2" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form action="{$basedomain}project/ins_team" method="post">
+				<!--Modal header-->
+				<div class="modal-header">
+					<button data-dismiss="modal" class="close" type="button">
+					<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">Add Participants</h4>
+				</div>
+
+				<!--Modal body-->
+				<div class="modal-body">
+					<p>Choose participant</p>
+					<select class="js-example-basic-multiple"  name="idUser" style="width:350px">
+					  {foreach $participants as $val}
+					  	<option value="{$val.id}">{$val.name}</option>
+					  {/foreach}
+					</select>
+				</div>
+
+				<input type="hidden" name="idProject" value="{$id}">
+				<input type="hidden" name="people" value="2">
+				<input type="hidden" name="n_status" value="1">
+
+				<!--Modal footer-->
+				<div class="modal-footer">
+					<button data-dismiss="modal" class="btn btn-default" type="button">Close</button>
+					<button class="btn btn-primary">Save changes</button>
+				</div>
+			</form>
 		</div>
 	</div>
 </div>
@@ -194,6 +283,23 @@
 			"dom": '<"newtoolbar">frtip'
 		});
 		$('#demo-custom-toolbar2').appendTo($("div.newtoolbar"));
+
+		var t = $('#demo-dt-addrows2').DataTable({
+			"responsive": true,
+			"language": {
+				"paginate": {
+				  "previous": '<i class="fa fa-angle-left"></i>',
+				  "next": '<i class="fa fa-angle-right"></i>'
+				}
+			},
+			"dom": '<"newtoolbar2">frtip'
+		});
+		$('#demo-custom-toolbar3').appendTo($("div.newtoolbar2"));
+
+		$(".js-example-basic-multiple").select2({
+			placeholder: "Select a user",
+	  		allowClear: true
+		});
 	})
 </script>
 {/literal}
