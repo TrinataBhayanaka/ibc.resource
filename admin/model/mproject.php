@@ -24,6 +24,22 @@ class mproject extends Database {
         return $data;
     }
 
+    function getpeople()
+    {
+        $sql = "SELECT * FROM hr_users WHERE type = 3 AND n_status = 1";
+        $data = $this->fetch($sql,1);
+
+        return $data;
+    }
+
+    function getDataCond($table,$cond)
+    {
+        $sql = "SELECT * FROM {$table} WHERE {$cond}";
+        $data = $this->fetch($sql,1);
+
+        return $data;
+    }
+
     
 }
 ?>

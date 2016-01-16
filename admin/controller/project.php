@@ -40,9 +40,16 @@ class project extends Controller {
 	public function ins_project()
 	{
 		global $basedomain;
-		
+
 		$_POST['description'] = htmlentities(htmlspecialchars($_POST['description'], ENT_QUOTES));
 		$_POST['n_status'] = 1;
+
+		if($_FILES['gambar']['error'] == 0)
+		{
+			$files = uploadFile('gambar');
+
+			$_POST['image'] = $files['full_name'];
+		}
 
 		$this->mproject->insertData($_POST,'hr_project');
 
@@ -63,9 +70,29 @@ class project extends Controller {
 		return $this->loadView('project/detail');
 	}
 
-	public function team()
+	public function people()
 	{
-		
+		$data = $this->mproject->getSData('hr_project','idProject='.$_GET['id']);
+		$users = $this->mproject->getpeople();
+
+		$data['date_start'] = changeDate($data['date_start']);
+		$data['date_end'] = changeDate($data['date_end']);
+
+		$this->view->assign('id',$_GET['id']);
+		$this->view->assign('data',$data);
+		$this->view->assign('users',$users);
+
+		return $this->loadView('project/people');
+	}
+
+	public function addpeople()
+	{
+		$data = $this->mproject->getDataCond('hr_project',"n_status=1 AND idProject != {$_GET['id']}");
+
+		$this->view->assign('id',$_GET['id']);
+		$this->view->assign('projeck',$data);
+
+		return $this->loadView('project/addPeople');
 	}
 
 	

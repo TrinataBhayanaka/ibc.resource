@@ -1,7 +1,7 @@
 <!--Page Title-->
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 <div id="page-title">
-	<h1 class="page-header text-overflow">Project Detail</h1>
+	<h1 class="page-header text-overflow">Project People</h1>
 </div>
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 <!--End page title-->
@@ -11,7 +11,7 @@
 <ol class="breadcrumb">
 	<li><a href="{$basedomain}">Home</a></li>
 	<li><a href="{$basedomain}project">Project List</a></li>
-	<li class="active">Project Detail</li>
+	<li class="active">Project People</li>
 </ol>
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 <!--End breadcrumb-->
@@ -32,8 +32,8 @@
 						</div>
 						<hr>
 						<div class="list-group bg-trans bord-no">
-							<a href="{$basedomain}project/detail/?id={$data.idProject}" class="list-group-item" style="background-color:rgba(125,211,188,0.5);"><i class="fa fa-send fa-fw"></i> Detail</a>
-							<a href="{$basedomain}project/people/?id={$data.idProject}" class="list-group-item"><i class="fa fa-users fa-fw"></i> People</a>
+							<a href="{$basedomain}project/detail/?id={$data.idProject}" class="list-group-item"><i class="fa fa-send fa-fw"></i> Detail</a>
+							<a href="{$basedomain}project/people/?id={$data.idProject}" class="list-group-item" style="background-color:rgba(125,211,188,0.5);"><i class="fa fa-users fa-fw"></i> People</a>
 							<a href="#" class="list-group-item"><i class="fa fa-files-o fa-fw"></i> Files</a>
 							<a href="#" class="list-group-item"><i class="fa fa-photo fa-fw"></i> Gallery</a>
 						</div>
@@ -54,7 +54,7 @@
 							<!--Sender Information-->
 							<div class="media">
 								<span class="media-left">
-									<img src="{$app_domain}public_assets/{$data.image}" class="img-circle img-sm" alt="Profile Picture">
+									<img src="{$basedomain}images/ava/av4.png" class="img-circle img-sm" alt="Profile Picture">
 								</span>
 								<div class="media-body">
 									<div class="text-bold">{$data.name}</div>
@@ -100,13 +100,36 @@
 						</div>{/*}
 					</div>
 
-					<!--Message-->
-					<!--===================================================-->
-					<div class="pad-all bord-all bg-gray-light">
-						{$data.description}
+					<div id="demo-custom-toolbar2" class="table-toolbar-left">
+						<a href="{$basedomain}project/addpeople/?id={$id}">
+							<button id="demo-custom-toolbar2" class="btn btn-primary btn-labeled fa fa-times">Add People</button>
+						</a>
 					</div>
-					<!--===================================================-->
-					<!--End Message-->
+
+					<table id="demo-dt-addrows" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Faculty</th>
+								<th class="min-tablet">Institution</th>
+								<th class="min-tablet">Education</th>
+								<th class="min-desktop">Status</th>
+								<th class="min-desktop">Detail</th>
+							</tr>
+						</thead>
+						<tbody>
+							{foreach $users as $val}
+								<tr>
+									<td>{$val.name}</td>
+									<td>{$val.jenis_pekerjaan}</td>
+									<td>{$val.institusi}</td>
+									<td>{$val.pendidikan}</td>
+									<td align="center"><span class="label label-normal label-{if $data.n_status eq 1}info{else}success{/if}">Team</span></td>
+									<td align="center"><a href="" class="btn-link">View</a></td>
+								</tr>
+							{/foreach}
+						</tbody>
+					</table>
 					
 				</div>
 			</div>
@@ -119,4 +142,22 @@
 </div>
 <!--===================================================-->
 <!--End page content-->
+
+{literal}
+<script type="text/javascript">
+	$(window).on('load', function() {
+		var t = $('#demo-dt-addrows').DataTable({
+			"responsive": true,
+			"language": {
+				"paginate": {
+				  "previous": '<i class="fa fa-angle-left"></i>',
+				  "next": '<i class="fa fa-angle-right"></i>'
+				}
+			},
+			"dom": '<"newtoolbar">frtip'
+		});
+		$('#demo-custom-toolbar2').appendTo($("div.newtoolbar"));
+	})
+</script>
+{/literal}
 
