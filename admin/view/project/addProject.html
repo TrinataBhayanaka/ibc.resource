@@ -40,6 +40,18 @@
 							</div>
 						</div>
 						<div class="form-group">
+							<label class="col-md-3 control-label" for="demo-text-input">Team Requirement</label>
+							<div class="col-md-7">
+								<select class="js-example-basic-multiple"  name="idRequired[]" style="width:350px" multiple="multiple">
+								  {foreach $data as $val}
+								  	<option value="{$val.idProject}">{$val.name}</option>
+								  {/foreach}
+								</select>
+								<input id="demo-sw-checkstate" type="checkbox" checked>
+								<span id="demo-sw-checkstate-field" class="label label-info"></span>
+							</div>
+						</div>
+						<div class="form-group">
 							<label class="col-md-3 control-label" for="demo-text-input">Date Start</label>
 							<div class="col-md-3">
 								<div class="input-group date">
@@ -101,6 +113,25 @@
 {literal}
 <script type="text/javascript">
 
+$(document).ready(function(){
+	$(".js-example-basic-multiple").select2({
+		placeholder: "Select a state",
+  		allowClear: true
+	});
+
+	var changeCheckbox = document.getElementById('demo-sw-checkstate'), changeField = document.getElementById('demo-sw-checkstate-field');
+	new Switchery(changeCheckbox)
+	changeField.innerHTML = "Required";
+	changeCheckbox.onchange = function() {
+		if(changeCheckbox.checked == false){
+			$(".js-example-basic-multiple").prop('disabled', true);
+			changeField.innerHTML = "Free";
+		} else {
+			$(".js-example-basic-multiple").prop('disabled', false);
+			changeField.innerHTML = "Required";
+		}
+	};
+})
 
 </script>	
 {/literal}

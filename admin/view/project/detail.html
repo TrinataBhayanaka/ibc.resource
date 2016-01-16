@@ -25,10 +25,17 @@
 				<div class="panel-body">
 					<div class="row">
 						<div class="pad-hor">
-							<h4 class="text-thin">Project Management</h4>
-							<a href="mailbox-compose.html" class="btn btn-block btn-success">
-								Project Complete
-							</a>
+							<div class="text-center pad-all">
+								<div class="pad-ver">
+									<img src="{$app_domain}public_assets/{$data.image}" class="img-lg img-border img-circle" alt="Profile Picture">
+								</div>
+							
+								<h4 class="text-lg text-overflow mar-no">{$data.name}</h4>
+								<p class="text-sm">{$data.client}<br><small>Since {$data.date_start}</small></p>
+								<a href="mailbox-compose.html" class="btn btn-block btn-success">
+									Project Complete
+								</a>
+							</div>
 						</div>
 						<hr>
 						<div class="list-group bg-trans bord-no">
@@ -54,11 +61,14 @@
 							<!--Sender Information-->
 							<div class="media">
 								<span class="media-left">
-									<img src="{$app_domain}public_assets/{$data.image}" class="img-circle img-sm" alt="Profile Picture">
+									<span class="fa-stack fa-2x">
+									  <i class="fa fa-square fa-stack-2x"></i>
+									  <i class="fa fa-send fa-stack-1x fa-inverse"></i>
+									</span>
 								</span>
 								<div class="media-body">
-									<div class="text-bold">{$data.name}</div>
-									<small class="text-muted">{$data.client}</small>
+									<div class="text-bold">Description</div>
+									<small class="text-muted">About Project</small>
 								</div>
 							</div>
 						</div>

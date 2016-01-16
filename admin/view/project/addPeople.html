@@ -25,10 +25,17 @@
 				<div class="panel-body">
 					<div class="row">
 						<div class="pad-hor">
-							<h4 class="text-thin">Project Management</h4>
-							<a href="mailbox-compose.html" class="btn btn-block btn-success">
-								Project Complete
-							</a>
+							<div class="text-center pad-all">
+								<div class="pad-ver">
+									<img src="{$app_domain}public_assets/{$data.image}" class="img-lg img-border img-circle" alt="Profile Picture">
+								</div>
+							
+								<h4 class="text-lg text-overflow mar-no">{$data.name}</h4>
+								<p class="text-sm">{$data.client}</p>
+								<a href="mailbox-compose.html" class="btn btn-block btn-success">
+									Project Complete
+								</a>
+							</div>
 						</div>
 						<hr>
 						<div class="list-group bg-trans bord-no">
