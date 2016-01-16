@@ -32,9 +32,15 @@
 							
 								<h4 class="text-lg text-overflow mar-no">{$data.name}</h4>
 								<p class="text-sm">{$data.client}<br><small>Since {$data.date_start}</small></p>
-								<a href="mailbox-compose.html" class="btn btn-block btn-success">
+								{if $data.n_status eq 1}
+								<a href="{$basedomain}project/upd_project/?id={$data.idProject}" class="btn btn-block btn-mint">
 									Project Complete
 								</a>
+								{else}
+								<a href="#popover" class="btn btn-block btn-success add-popover" data-original-title="Congratulation" data-content="Your {$data.name} project already completed. You can still upload documents and picture!" data-placement="bottom" data-trigger="focus" data-toggle="popover">
+									Already Complete
+								</a>
+								{/if}
 							</div>
 						</div>
 						<hr>
@@ -112,9 +118,11 @@
 				<div class="panel-body">
 					<div class="tab-content">
 						<div class="tab-pane fade in active" id="demo-tabs-box-1">
+						{if $data.n_status eq 1}
 							<div id="demo-custom-toolbar2" class="table-toolbar-left">
 								<button id="demo-custom-toolbar2" class="btn btn-primary btn-labeled fa fa-plus" data-target="#demo-default-modal" data-toggle="modal">Add Team</button>
 							</div>
+						{/if}
 
 							<table id="demo-dt-addrows" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
 								<thead>
@@ -134,9 +142,11 @@
 											<td>{$val.institusi}</td>
 											<td>{$val.pendidikan}</td>
 											<td align="center">
+											{if $data.n_status eq 1}
 												<a href="{$basedomain}project/del_people/?id={$val.id}a2a{$id}">
 													<button class="btn btn-danger btn-xs btn-labeled fa fa-trash">Delete</button>
 												</a>
+											{/if}
 											</td>
 										</tr>
 									{/foreach}
@@ -144,10 +154,11 @@
 							</table>
 						</div>
 						<div class="tab-pane fade" id="demo-tabs-box-2">
+						{if $data.n_status eq 1}
 							<div id="demo-custom-toolbar3" class="table-toolbar-left">
 								<button id="demo-custom-toolbar2" class="btn btn-primary btn-labeled fa fa-plus" data-target="#demo-default-modal2" data-toggle="modal">Add Participants</button>
 							</div>
-
+						{/if}
 							<table id="demo-dt-addrows2" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
 								<thead>
 									<tr>
@@ -166,9 +177,11 @@
 											<td>{$val.institusi}</td>
 											<td>{$val.pendidikan}</td>
 											<td align="center">
+											{if $data.n_status eq 1}
 												<a href="{$basedomain}project/del_people/?id={$val.id}a2a{$id}">
 												<button class="btn btn-danger btn-xs btn-labeled fa fa-trash">Delete</button>
 												</a>
+											{/if}
 											</td>
 										</tr>
 									{/foreach}

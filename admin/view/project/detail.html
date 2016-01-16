@@ -32,9 +32,15 @@
 							
 								<h4 class="text-lg text-overflow mar-no">{$data.name}</h4>
 								<p class="text-sm">{$data.client}<br><small>Since {$data.date_start}</small></p>
-								<a href="mailbox-compose.html" class="btn btn-block btn-success">
+								{if $data.n_status eq 1}
+								<a href="{$basedomain}project/upd_project/?id={$data.idProject}" class="btn btn-block btn-mint">
 									Project Complete
 								</a>
+								{else}
+								<a href="#popover" class="btn btn-block btn-success add-popover" data-original-title="Congratulation" data-content="Your {$data.name} project already completed. You can still upload documents and picture!" data-placement="bottom" data-trigger="focus" data-toggle="popover">
+									Already Complete
+								</a>
+								{/if}
 							</div>
 						</div>
 						<hr>

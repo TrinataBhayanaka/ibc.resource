@@ -130,6 +130,18 @@ class project extends Controller {
 		exit;
 	}
 
+	public function upd_project()
+	{
+		global $basedomain;
+
+		$id = $_GET['id'];
+
+		$this->mproject->updProject($id);
+
+		echo "<script>alert('Thank you for your hard work. Project is completed');window.location.href='".$basedomain."project/detail/?id={$id}'</script>";
+		exit;
+	}
+
 	
 }
 

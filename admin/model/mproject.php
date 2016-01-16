@@ -3,7 +3,7 @@ class mproject extends Database {
 	
 	function getData($table)
     {
-        $sql = "SELECT * FROM {$table} WHERE n_status IN (1,3)";
+        $sql = "SELECT * FROM {$table} WHERE n_status IN (1,2,3)";
         $data = $this->fetch($sql,1);
 
         return $data;
@@ -18,7 +18,7 @@ class mproject extends Database {
 
     function getSData($table,$id)
     {
-        $sql = "SELECT * FROM {$table} WHERE n_status = 1 AND {$id} LIMIT 1";
+        $sql = "SELECT * FROM {$table} WHERE n_status IN (1,2) AND {$id} LIMIT 1";
         $data = $this->fetch($sql);
 
         return $data;
@@ -66,6 +66,22 @@ class mproject extends Database {
 
         $sql = "DELETE FROM hr_userproject WHERE idUser = {$data[0]} AND people = {$data[1]} AND idProject = {$data[2]}";
         $exec = $this->query($sql);
+
+        return true;
+    }
+
+    function updProject($id)
+    {
+        $sql = "UPDATE hr_project SET n_status = 2 WHERE idProject = {$id}";
+        $exec = $this->query($sql);
+
+        $sql = "SELECT * FROM hr_userproject WHERE idProject = {$id} AND people = 2";
+        $data = $this->fetch($sql,1);
+
+        foreach ($data as $key => $val) {
+            $sql = "UPDATE hr_users SET projectList = CONCAT(projectList, {$id}) WHERE id = {$val['idUser']}";
+            $exec = $this->query($sql);
+        }
 
         return true;
     }
